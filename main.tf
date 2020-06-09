@@ -57,9 +57,9 @@ resource "aws_acm_certificate" "default" {
 
 resource "aws_route53_record" "validation" {
   name    = aws_acm_certificate.default.domain_validation_options.0.resource_record_name
-  type    = aws_acm_certificate.default.domain_validation_options.0.resourc_record_type
+  type    = aws_acm_certificate.default.domain_validation_options.0.resource_record_type
   zone_id = aws_route53_zone.primary.zone_id
-  records = ["${aws_acm_certifcate.default.domain_validation_options.0.resource_record_value}"]
+  records = ["${aws_acm_certificate.default.domain_validation_options.0.resource_record_value}"]
   ttl     = "60"
 }
 
@@ -113,13 +113,13 @@ resource "aws_cloudfront_distribution" "root_distribution" {
   aliases = ["${var.domain}"]
 
   restrictions {
-    geo_restrictions {
+    geo_restriction {
       restriction_type = "none"
     }
   }
 
   viewer_certificate {
-    acm_certificate_arm      = aws_acm_certificate.default.arn
+    acm_certificate_arn      = aws_acm_certificate.default.arn
     minimum_protocol_version = "TLSv1"
     ssl_support_method       = "sni-only"
   }

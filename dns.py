@@ -12,8 +12,6 @@ def call_bash_script():
     subprocess.call("./cleanup.sh", shell=True)
     time.sleep(10)
 
-
-
 # Function to actually update the DNS servers at godaddy
 def update_dns_fn():
 

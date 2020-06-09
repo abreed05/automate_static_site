@@ -1,4 +1,4 @@
 variable "domain" {
-  type        = string
-  description = "yourdomainhere"
+  type    = string
+  default = "yourdomainhere"
 }

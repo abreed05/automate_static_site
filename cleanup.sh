@@ -14,7 +14,7 @@ aws route53 list-resource-record-sets --hosted-zone-id $hzid_sed --query "Resour
 # shell command is basically grep | awk | sed
 
 dns_grep=$(grep Value dns_records.txt)
-dns_awk=$(awk '/[ns][-][0-9]/ {print $2}' <<< "${dns_grep}")
+dns_awk=$(awk '/[ns][-][0-9]{2}/ {print $2}' <<< "${dns_grep}")
 dns_sed1=$(sed 's/\"//g' <<< "${dns_awk}")
 dns_sed2=$(sed 's/.$//g' <<< "${dns_sed1}") 
 echo $dns_sed2 > dns_records.txt
