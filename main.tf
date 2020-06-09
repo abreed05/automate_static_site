@@ -36,6 +36,9 @@ resource "aws_route53_zone" "primary" {
 }
 
 # null_resource to call Python script to update Godaddy Name servers after AWS Hosted Zone has been created
+# the executable bit must be set on the python scripts to run as they currently are configured. 
+# this can be accomplished with chmod +x dns.py or chmod +x repo.py 
+
 
 resource "null_resource" "updateDNS" {
   depends_on = [
@@ -44,6 +47,15 @@ resource "null_resource" "updateDNS" {
 
   provisioner "local-exec" {
     command = "./dns.py"
+  }
+}
+
+# null resource to call Python script to initalize a blank github repo based on domain name
+resource "null_resource" "repopy" {
+  depends_on = [aws_route53_zone.primary]
+
+  provisioner "local-exec" {
+    command = "./repo.py"
   }
 }
 
