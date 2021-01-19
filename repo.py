@@ -1,13 +1,12 @@
-#!/usr/bin/python3
-
 import config
 import os
+import requests
 
 def create_repo_fn():
-    domain_name = config.domainname
-    gh_token = config.github_token
-    repo_cmd = 'curl -H \"Authorization: token ' + gh_token + '" --data \'{"name":"' + domain_name + '", "private":"true"}\' https://api.github.com/user/repos'
-    os.system(repo_cmd)
-
+   
+    repo_url = "https://api.github.com/user/repos"
+    repo_headers = {'Authorization':"Token "+config.github_token}
+    repo_payload = {"name": config.domainname, 'private': 'true'}
+    requests.post(repo_url, headers=repo_headers, json=repo_payload)
 
 create_repo_fn()
